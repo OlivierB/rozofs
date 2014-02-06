@@ -48,24 +48,40 @@ void transform_forward(const bin_t * support, int rows, int cols, int np,
         }
     }
 
-    assert(cols % 8 == 0);
-    for (i = 0; i < np; i++) {
-        projection_t *p = projections + i;
-        const pxl_t *ppix = support;
-        bin_t *pbin; // = p->bins - offsets[i];
-        for (l = 0; l < rows; l++) {
-            pbin = p->bins + l * p->angle.p - offsets[i];
-            for (k = cols / 8; k > 0; k--) {
-                pbin[0] ^= ppix[0];
-                pbin[1] ^= ppix[1];
-                pbin[2] ^= ppix[2];
-                pbin[3] ^= ppix[3];
-                pbin[4] ^= ppix[4];
-                pbin[5] ^= ppix[5];
-                pbin[6] ^= ppix[6];
-                pbin[7] ^= ppix[7];
-                pbin += 8;
-                ppix += 8;
+    //assert(cols % 8 == 0);
+    if (cols % 8 == 0) {
+        for (i = 0; i < np; i++) {
+            projection_t *p = projections + i;
+            const pxl_t *ppix = support;
+            bin_t *pbin; // = p->bins - offsets[i];
+            for (l = 0; l < rows; l++) {
+                pbin = p->bins + l * p->angle.p - offsets[i];
+                for (k = cols / 8; k > 0; k--) {
+                    pbin[0] ^= ppix[0];
+                    pbin[1] ^= ppix[1];
+                    pbin[2] ^= ppix[2];
+                    pbin[3] ^= ppix[3];
+                    pbin[4] ^= ppix[4];
+                    pbin[5] ^= ppix[5];
+                    pbin[6] ^= ppix[6];
+                    pbin[7] ^= ppix[7];
+                    pbin += 8;
+                    ppix += 8;
+                }
+            }
+        }
+    } else {
+        for (i = 0; i < np; i++) {
+            projection_t *p = projections + i;
+            const pxl_t *ppix = support;
+            bin_t *pbin; // = p->bins - offsets[i];
+            for (l = 0; l < rows; l++) {
+                pbin = p->bins + l * p->angle.p - offsets[i];
+                for (k = cols; k > 0; k--) {
+                    pbin[0] ^= ppix[0];
+                    pbin += 1;
+                    ppix += 1;
+                }
             }
         }
     }
