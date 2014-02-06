@@ -27,7 +27,7 @@
 #include <rozofs/rozofs_srv.h>
 #include "rozofs.h"
 
-#define LAYOUT_MAX 3
+#define LAYOUT_MAX 4
 
 /**
  * structure used to store the parameters relative to a given layout

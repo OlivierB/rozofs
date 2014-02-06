@@ -40,6 +40,11 @@ void rozofs_layout_initialize() {
                 p->rozofs_forward = 3;
                 p->rozofs_inverse = 2;
                 break;
+            case LAYOUT_3_5_7:
+                p->rozofs_safe = 7;
+                p->rozofs_forward = 5;
+                p->rozofs_inverse = 3;
+                break;
             case LAYOUT_4_6_8:
                 p->rozofs_safe = 8;
                 p->rozofs_forward = 6;
