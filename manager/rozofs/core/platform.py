@@ -421,14 +421,14 @@ class Platform(object):
 #
 #        return configuration[Role.EXPORTD].volumes[vid]
 
-    def convert_layout(inverse, forward, safe):
+    def convert_layout(self, inverse, forward, safe):
         val = 0
         val = val | (inverse & 0xFF)
         val = val | ((forward & 0xFF) << 8)
         val = val | ((safe & 0xFF) << 16)
         return val
 
-    def decode_layout(val):
+    def decode_layout(self, val):
         safe = (val >> 16)
         forward = ((val >> 8) & 0xFF)
         inverse = (val & 0xFF)
