@@ -41,7 +41,7 @@ typedef struct _rozofs_conf_layout_t {
     uint16_t *rozofs_psizes; /**< size in bins of each projection         */
 } rozofs_conf_layout_t;
 
-extern rozofs_conf_layout_t rozofs_conf_layout_table[];
+extern rozofs_conf_layout_t rozofs_conf_layout_table;
 extern rozofs_layout;
 
 /**

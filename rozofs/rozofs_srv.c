@@ -81,6 +81,7 @@ void rozofs_layout_initialize() {
 }
 
 int set_layout(int32_t layout) {
+    int i;
     
     if (rozofs_layout == layout) {
         return 1;
@@ -133,7 +134,7 @@ int set_layout(int32_t layout) {
 void rozofs_layout_release() {
     rozofs_conf_layout_t *p;
 
-    p = rozofs_conf_layout_table;
+    p = &rozofs_conf_layout_table;
 
     if (p->rozofs_angles)
         free(p->rozofs_angles);
