@@ -137,7 +137,7 @@ def main(argv=None):  # IGNORE:C0111
         action_layout_get_parser = action_layout_subparsers.add_parser('get', add_help=False, help='get layout')
 
         action_layout_set_parser = action_layout_subparsers.add_parser('set', add_help=False, help='set layout')
-        action_layout_set_parser.add_argument('layout', nargs=1, type=int, choices=[0, 1, 2], help='the layout to set.')
+        action_layout_set_parser.add_argument('layout', nargs=3, type=int, help='the layout to set.')
 
         # Node
         action_node_parser = ArgumentParser(add_help=False, prog='rozo node')

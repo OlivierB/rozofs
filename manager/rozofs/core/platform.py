@@ -21,7 +21,7 @@ import subprocess
 import time
 
 from rozofs.core.constants import STORAGED_MANAGER, EXPORTD_MANAGER, \
-    AGENT_PORT, LAYOUT_VALUES, LAYOUT_SAFE, EXPORTS_ROOT, \
+    AGENT_PORT, LAYOUT_SAFE, EXPORTS_ROOT, \
     STORAGES_ROOT, ROZOFSMOUNT_MANAGER
 from rozofs.core.agent import ServiceStatus
 from rozofs.core.exportd import VolumeConfig, ClusterConfig, ExportConfig
@@ -374,8 +374,10 @@ class Platform(object):
 
     # should be done at cli with get/set configuration?!
     def set_layout(self, layout):
-        if not layout in [0, 1, 2]:
-            raise Exception("invalid layout: %d" % layout)
+        decode = self.decode_layout(layout)
+
+        if not (decode[0] <= decode[1] and decode[1] <= decode[2]) or decode[0] < 1:
+            raise Exception("invalid layout: (%i, %i, %i)" % decode)
 
         node = self._get_exportd_node()
         configuration = node.get_configurations(Role.EXPORTD)
@@ -419,6 +421,19 @@ class Platform(object):
 #
 #        return configuration[Role.EXPORTD].volumes[vid]
 
+    def convert_layout(inverse, forward, safe):
+        val = 0
+        val = val | (inverse & 0xFF)
+        val = val | ((forward & 0xFF) << 8)
+        val = val | ((safe & 0xFF) << 16)
+        return val
+
+    def decode_layout(val):
+        safe = (val >> 16)
+        forward = ((val >> 8) & 0xFF)
+        inverse = (val & 0xFF)
+        return (inverse, forward, safe)
+
     def add_nodes(self, hosts, vid=None):
         """ Add storaged nodes to the platform
 
@@ -433,9 +448,10 @@ class Platform(object):
             raise Exception("exportd node is off line.")
 
         # should be allowed !!!
-        if len(hosts) < LAYOUT_VALUES[econfig[Role.EXPORTD].layout][LAYOUT_SAFE]:
+        decode = self.decode_layout(econfig[Role.EXPORTD].layout)
+        if len(hosts) < decode[LAYOUT_SAFE]:
             raise Exception("too few hosts: %s over %s" % (len(hosts),
-                    LAYOUT_VALUES[econfig[Role.EXPORTD].layout][LAYOUT_SAFE]))
+                    decode[LAYOUT_SAFE]))
 
         if vid is not None:
             # check if the given one is a new one else get the related VolumeConfig

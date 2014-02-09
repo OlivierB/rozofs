@@ -17,19 +17,20 @@
 # <http://www.gnu.org/licenses/>.
 
 from rozofs.core.platform import Platform
-from rozofs.core.constants import LAYOUT_VALUES
 from rozofs.cli.output import ordered_puts
 from collections import OrderedDict
 
 def set(platform, args):
-    platform.set_layout(args.layout[0])
+    layout = platform.convert_layout(args.layout[0], args.layout[1], args.layout[2])
+    platform.set_layout(layout)
 
 def get(platform, args):
     layout = platform. get_layout()
+    decode = platform.decode_layout(layout)
     ordered_puts({'layout '+str(layout): OrderedDict([
-          ("inverse", LAYOUT_VALUES[layout][0]),
-          ("forward", LAYOUT_VALUES[layout][1]),
-          ("safe", LAYOUT_VALUES[layout][2])
+          ("inverse", decode[0]),
+          ("forward", decode[1]),
+          ("safe", decode[2])
         ])})
 
 def dispatch(args):
