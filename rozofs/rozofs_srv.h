@@ -42,7 +42,7 @@ typedef struct _rozofs_conf_layout_t {
 } rozofs_conf_layout_t;
 
 extern rozofs_conf_layout_t rozofs_conf_layout_table;
-extern rozofs_layout;
+extern int rozofs_layout;
 
 /**
  * Initialize the layout table
