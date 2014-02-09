@@ -137,7 +137,7 @@ int rbs_get_rb_entry_cnts(rb_entry_t * rb_entry,
 }
 
 int rbs_get_rb_entry_list(mclient_t * mclt, cid_t cid, sid_t sid,
-        sid_t rebuild_sid, uint8_t * spare, uint8_t * layout,
+        sid_t rebuild_sid, uint8_t * spare, uint32_t * layout,
         sid_t dist_set[ROZOFS_SAFE_MAX], uint64_t * cookie,
         bins_file_rebuild_t ** children, uint8_t * eof) {
 

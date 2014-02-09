@@ -144,7 +144,7 @@ void mp_list_bins_files_1_svc_nb(void * pt_req,
             &args->cookie,
             (bins_file_rebuild_t **)
             & ret->mp_list_bins_files_ret_t_u.reply.children,
-            (uint8_t *) & ret->mp_list_bins_files_ret_t_u.reply.eof) != 0) {
+            (uint32_t *) & ret->mp_list_bins_files_ret_t_u.reply.eof) != 0) {
       ret->mp_list_bins_files_ret_t_u.error = errno;
       goto out;
     }

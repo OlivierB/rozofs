@@ -55,7 +55,7 @@ xdr_sp_write_arg_t (XDR *xdrs, sp_write_arg_t *objp)
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->sid))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->layout))
+	 if (!xdr_uint32_t (xdrs, &objp->layout))
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->spare))
 		 return FALSE;
@@ -87,7 +87,7 @@ xdr_sp_write_arg_no_bins_t (XDR *xdrs, sp_write_arg_no_bins_t *objp)
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->sid))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->layout))
+	 if (!xdr_uint32_t (xdrs, &objp->layout))
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->spare))
 		 return FALSE;
@@ -119,7 +119,7 @@ xdr_sp_read_arg_t (XDR *xdrs, sp_read_arg_t *objp)
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->sid))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->layout))
+	 if (!xdr_uint32_t (xdrs, &objp->layout))
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->spare))
 		 return FALSE;
@@ -145,7 +145,7 @@ xdr_sp_truncate_arg_t (XDR *xdrs, sp_truncate_arg_t *objp)
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->sid))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->layout))
+	 if (!xdr_uint32_t (xdrs, &objp->layout))
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->spare))
 		 return FALSE;

@@ -55,7 +55,7 @@ xdr_mp_remove_arg_t (XDR *xdrs, mp_remove_arg_t *objp)
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->sid))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->layout))
+	 if (!xdr_uint32_t (xdrs, &objp->layout))
 		 return FALSE;
 	 if (!xdr_vector (xdrs, (char *)objp->dist_set, ROZOFS_SAFE_MAX_NET,
 		sizeof (uint32_t), (xdrproc_t) xdr_uint32_t))
@@ -164,7 +164,7 @@ xdr_mp_child_t (XDR *xdrs, mp_child_t *objp)
 	//int i;
 	 if (!xdr_mp_uuid_t (xdrs, objp->fid))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->layout))
+	 if (!xdr_uint32_t (xdrs, &objp->layout))
 		 return FALSE;
 	 if (!xdr_vector (xdrs, (char *)objp->dist_set, ROZOFS_SAFE_MAX,
 		sizeof (uint8_t), (xdrproc_t) xdr_uint8_t))
@@ -184,7 +184,7 @@ xdr_bins_files_list_t (XDR *xdrs, bins_files_list_t *objp)
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->eof))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->layout))
+	 if (!xdr_uint32_t (xdrs, &objp->layout))
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->spare))
 		 return FALSE;
@@ -230,7 +230,7 @@ xdr_mp_list_bins_files_arg_t (XDR *xdrs, mp_list_bins_files_arg_t *objp)
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->rebuild_sid))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->layout))
+	 if (!xdr_uint32_t (xdrs, &objp->layout))
 		 return FALSE;
 	 if (!xdr_vector (xdrs, (char *)objp->dist_set, ROZOFS_SAFE_MAX,
 		sizeof (uint8_t), (xdrproc_t) xdr_uint8_t))

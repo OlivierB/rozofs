@@ -186,7 +186,7 @@ int storage_stat(storage_t * st, sstat_t * sstat);
 
 
 int storage_list_bins_files_to_rebuild(storage_t * st, sid_t sid,
-        uint8_t * layout, sid_t *dist_set, uint8_t * spare, uint64_t * cookie,
+        uint32_t * layout, sid_t *dist_set, uint8_t * spare, uint64_t * cookie,
         bins_file_rebuild_t ** children, uint8_t * eof);
 
 #endif
