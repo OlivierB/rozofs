@@ -46,7 +46,7 @@ typedef struct exportclt {
     char *passwd;
     eid_t eid;
     list_t storages; // XXX: Need a lock?
-    uint8_t layout; // Layout for this export
+    uint32_t layout; // Layout for this export
     fid_t rfid;
     uint32_t bufsize;
     uint32_t min_read_size;

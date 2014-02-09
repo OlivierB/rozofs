@@ -145,7 +145,7 @@ int  rozofs_storcli_transform_get_read_len_in_bytes(rozofs_storcli_inverse_block
 *
 */
 inline int rozofs_storcli_transform_inverse_check_timestamp_tb(rozofs_storcli_projection_ctx_t *prj_ctx_p,  
-                                       uint8_t layout,
+                                       uint32_t layout,
                                        uint32_t block_idx, 
                                        uint8_t *prj_idx_tb_p,
                                        uint64_t *timestamp_p,
@@ -261,7 +261,7 @@ inline int rozofs_storcli_transform_inverse_check_timestamp_tb(rozofs_storcli_pr
 *
 */
 inline int rozofs_storcli_transform_inverse_check(rozofs_storcli_projection_ctx_t *prj_ctx_p,  
-                                       uint8_t layout,
+                                       uint32_t layout,
                                        uint32_t block_idx, 
                                        uint8_t *prj_idx_tb_p,
                                        uint64_t *timestamp_p,
@@ -402,7 +402,7 @@ inline int rozofs_storcli_transform_inverse_check(rozofs_storcli_projection_ctx_
  * @return: the length written on success, -1 otherwise (errno is set)
  */
  int rozofs_storcli_transform_inverse(rozofs_storcli_projection_ctx_t *prj_ctx_p,  
-                                       uint8_t layout,
+                                       uint32_t layout,
                                        uint32_t first_block_idx, 
                                        uint32_t number_of_blocks, 
                                        rozofs_storcli_inverse_block_t *block_ctx_p,
@@ -585,7 +585,7 @@ static inline int rozofs_data_block_check_empty(char *data, int size)
  * @return: the length written on success, -1 otherwise (errno is set)
  */
  int rozofs_storcli_transform_forward(rozofs_storcli_projection_ctx_t *prj_ctx_p,  
-                                       uint8_t layout,
+                                       uint32_t layout,
                                        uint32_t first_block_idx, 
                                        uint32_t number_of_blocks,
                                        uint64_t timestamp, 

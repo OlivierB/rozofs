@@ -101,7 +101,7 @@ void rozofs_storcli_read_req_processing(rozofs_storcli_ctx_t *working_ctx_p);
   
   @retval number of received projection
 */
-static inline int rozofs_storcli_rebuild_check(uint8_t layout,rozofs_storcli_projection_ctx_t *prj_cxt_p)
+static inline int rozofs_storcli_rebuild_check(uint32_t layout,rozofs_storcli_projection_ctx_t *prj_cxt_p)
 {
   /*
   ** Get the rozofs_inverse and rozofs_forward value for the layout
@@ -131,7 +131,7 @@ static inline int rozofs_storcli_rebuild_check(uint8_t layout,rozofs_storcli_pro
   
   @retval number of received projection
 */
-static inline int rozofs_storcli_check_read_in_progress_projections(uint8_t layout,rozofs_storcli_projection_ctx_t *prj_cxt_p)
+static inline int rozofs_storcli_check_read_in_progress_projections(uint32_t layout,rozofs_storcli_projection_ctx_t *prj_cxt_p)
 {
   /*
   ** Get the rozofs_inverse and rozofs_forward value for the layout
@@ -1085,7 +1085,7 @@ void rozofs_storcli_read_req_processing_cbk(void *this,void *param)
 
    storcli_read_rq_p = (storcli_read_arg_t*)&working_ctx_p->storcli_read_arg;
    
-   uint8_t layout         = storcli_read_rq_p->layout;
+   uint32_t layout         = storcli_read_rq_p->layout;
    uint8_t rozofs_safe    = rozofs_get_rozofs_safe(layout);
    uint8_t rozofs_inverse = rozofs_get_rozofs_inverse(layout);
    rozofs_max_psize       = rozofs_get_max_psize(layout);

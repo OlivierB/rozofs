@@ -124,7 +124,7 @@ extern uint8_t      rozofs_storcli_prj_idx_table[];
  * @return: the length written on success, -1 otherwise (errno is set)
  */
  int rozofs_storcli_transform_forward(rozofs_storcli_projection_ctx_t *prj_ctx_p,  
-                                       uint8_t layout,
+                                       uint32_t layout,
                                        uint32_t first_block_idx, 
                                        uint32_t number_of_blocks,
                                        uint64_t timestamp, 
@@ -154,7 +154,7 @@ extern uint8_t      rozofs_storcli_prj_idx_table[];
  * @return: the length written on success, -1 otherwise (errno is set)
  */
  int rozofs_storcli_transform_inverse(rozofs_storcli_projection_ctx_t *prj_ctx_p,  
-                                       uint8_t layout,
+                                       uint32_t layout,
                                        uint32_t first_block_idx, 
                                        uint32_t number_of_blocks, 
                                        rozofs_storcli_inverse_block_t *block_ctx_p,

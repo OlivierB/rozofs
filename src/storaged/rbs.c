@@ -122,7 +122,7 @@ static int rbs_restore_one_rb_entry(storage_t * st, rb_entry_t * re) {
     rbs_storcli_ctx_t working_ctx;
 
     // Get rozofs layout parameters
-    uint8_t layout = re->layout;
+    uint32_t layout = re->layout;
     uint8_t rozofs_safe = rozofs_get_rozofs_safe(layout);
     uint8_t rozofs_forward = rozofs_get_rozofs_forward(layout);
     uint16_t rozofs_max_psize = rozofs_get_max_psize(layout);
@@ -576,7 +576,7 @@ out:
 int rbs_get_rb_entry_list_one_storage(rb_stor_t *rb_stor, cid_t cid,
         sid_t sid) {
     int status = -1;
-    uint8_t layout = 0;
+    uint32_t layout = 0;
     uint8_t spare = 0;
     uint64_t cookie = 0;
     uint8_t eof = 0;

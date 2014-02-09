@@ -160,7 +160,7 @@ void volume_balance(volume_t *volume);
  *
  * @return: 0 on success -1 otherwise (errno is set)
  */
-int volume_distribute(volume_t *volume, uint8_t layout, cid_t *cid, sid_t *sids);
+int volume_distribute(volume_t *volume, uint32_t layout, cid_t *cid, sid_t *sids);
 
 /** get status of a volume
  *
@@ -168,7 +168,7 @@ int volume_distribute(volume_t *volume, uint8_t layout, cid_t *cid, sid_t *sids)
  * @param layout: rozofs layout used
  * @param volume_stat: the volume_stat_t to fill
  */
-void volume_stat(volume_t *volume, uint8_t layout, volume_stat_t *volume_stat);
+void volume_stat(volume_t *volume, uint32_t layout, volume_stat_t *volume_stat);
 
 /** Check that a given distribution is valid
  *

@@ -107,7 +107,7 @@ typedef struct export {
     volume_t *volume; ///< the volume export relies on
     char root[PATH_MAX]; ///< absolute path of the storage root
     char md5[ROZOFS_MD5_SIZE]; ///< passwd
-    uint8_t layout; ///< layout
+    uint32_t layout; ///< layout
     uint64_t squota; ///< soft quota in blocks
     uint64_t hquota; ///< hard quota in blocks
     export_fstat_t fstat; ///< fstat value
@@ -168,7 +168,7 @@ int export_create(const char *root);
  *
  * @return 0 on success -1 otherwise (errno is set)
  */
-int export_initialize(export_t * e, volume_t *volume, uint8_t layout,
+int export_initialize(export_t * e, volume_t *volume, uint32_t layout,
         lv2_cache_t *lv2_cache, eid_t eid, const char *root, const char *md5,
         uint64_t squota, uint64_t hquota);
 

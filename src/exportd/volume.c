@@ -289,7 +289,7 @@ out:
 
 // what if a cluster is < rozofs safe
 
-static int cluster_distribute(uint8_t layout, cluster_t *cluster, sid_t *sids) {
+static int cluster_distribute(uint32_t layout, cluster_t *cluster, sid_t *sids) {
     list_t *p;
     int status = -1;
     uint8_t ms_found = 0;
@@ -325,7 +325,7 @@ static int cluster_distribute(uint8_t layout, cluster_t *cluster, sid_t *sids) {
     return status;
 }
 
-int volume_distribute(volume_t *volume, uint8_t layout, cid_t *cid, sid_t *sids) {
+int volume_distribute(volume_t *volume, uint32_t layout, cid_t *cid, sid_t *sids) {
     list_t *p;
     int xerrno = ENOSPC;
 
@@ -355,7 +355,7 @@ out:
     return errno == 0 ? 0 : -1;
 }
 
-void volume_stat(volume_t *volume, uint8_t layout, volume_stat_t *stat) {
+void volume_stat(volume_t *volume, uint32_t layout, volume_stat_t *stat) {
     list_t *p;
     DEBUG_FUNCTION;
     START_PROFILING(volume_stat);

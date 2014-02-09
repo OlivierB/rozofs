@@ -44,7 +44,7 @@
 
 #include "storage.h"
 
-char *storage_map_distribution(storage_t * st, uint8_t layout,
+char *storage_map_distribution(storage_t * st, uint32_t layout,
         sid_t dist_set[ROZOFS_SAFE_MAX], uint8_t spare, char *path) {
     int i = 0;
     char build_path[FILENAME_MAX];
@@ -88,7 +88,7 @@ char *storage_map_projection(fid_t fid, char *path) {
 
 int storage_initialize(storage_t *st, cid_t cid, sid_t sid, const char *root) {
     int status = -1;
-    uint8_t layout = 0;
+    uint32_t layout = 0;
     char path[FILENAME_MAX];
     struct stat s;
 
@@ -173,7 +173,7 @@ void storage_release(storage_t * st) {
 
 uint64_t buf_ts_storage_write[STORIO_CACHE_BCOUNT];
 
-int storage_write(storage_t * st, uint8_t layout, sid_t * dist_set,
+int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
         uint8_t spare, fid_t fid, bid_t bid, uint32_t nb_proj, uint8_t version,
         uint64_t *file_size, const bin_t * bins) {
     int status = -1;
@@ -282,7 +282,7 @@ uint64_t buf_ts_storcli_read[STORIO_CACHE_BCOUNT];
 char storage_bufall[4096];
 uint8_t storage_read_optim[4096];
 
-int storage_read(storage_t * st, uint8_t layout, sid_t * dist_set,
+int storage_read(storage_t * st, uint32_t layout, sid_t * dist_set,
         uint8_t spare, fid_t fid, bid_t bid, uint32_t nb_proj,
         bin_t * bins, size_t * len_read, uint64_t *file_size) {
 
@@ -357,7 +357,7 @@ out:
     return status;
 }
 
-int storage_truncate(storage_t * st, uint8_t layout, sid_t * dist_set,
+int storage_truncate(storage_t * st, uint32_t layout, sid_t * dist_set,
         uint8_t spare, fid_t fid, tid_t proj_id,bid_t bid,uint8_t version,uint16_t last_seg,uint64_t last_timestamp) {
     int status = -1;
     char path[FILENAME_MAX];
@@ -457,7 +457,7 @@ out:
     return status;
 }
 
-int storage_rm_file(storage_t * st, uint8_t layout, sid_t * dist_set,
+int storage_rm_file(storage_t * st, uint32_t layout, sid_t * dist_set,
         fid_t fid) {
     int status = -1;
     uint8_t spare = 0;
@@ -523,7 +523,7 @@ out:
     return status;
 }
 
-bins_file_rebuild_t ** storage_list_bins_file(storage_t * st, uint8_t layout,
+bins_file_rebuild_t ** storage_list_bins_file(storage_t * st, uint32_t layout,
         sid_t * dist_set, uint8_t spare, uint64_t * cookie,
         bins_file_rebuild_t ** children, uint8_t * eof,
         uint64_t * current_files_nb) {
@@ -620,7 +620,7 @@ int storage_list_bins_files_to_rebuild(storage_t * st, sid_t sid,
     char **p;
     size_t cnt;
     glob_t glob_results;
-    uint8_t layout_it = 0;
+    uint32_t layout_it = 0;
     uint8_t spare_it = 0;
     uint64_t current_files_nb = 0;
     bins_file_rebuild_t **iterator = NULL;

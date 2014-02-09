@@ -77,10 +77,8 @@ void transform_forward(const bin_t * support, int rows, int cols, int np,
             bin_t *pbin; // = p->bins - offsets[i];
             for (l = 0; l < rows; l++) {
                 pbin = p->bins + l * p->angle.p - offsets[i];
-                for (k = cols; k > 0; k--) {
-                    pbin[0] ^= ppix[0];
-                    pbin += 1;
-                    ppix += 1;
+                for (k = cols - 1; k >= 0; k--) {
+                    pbin[k] ^= ppix[k];
                 }
             }
         }
@@ -258,24 +256,34 @@ void transform_forward_one_proj(const bin_t * support, int rows, int cols,
     memset(projections[proj_id].bins, 0, projections[proj_id].size
             * sizeof (bin_t));
 
-    assert(cols % 8 == 0);
+    // assert(cols % 8 == 0);
 
     projection_t *p = projections + proj_id;
     const pxl_t *ppix = support;
     bin_t *pbin;
-    for (l = 0; l < rows; l++) {
-        pbin = p->bins + l * p->angle.p - offset;
-        for (k = cols / 8; k > 0; k--) {
-            pbin[0] ^= ppix[0];
-            pbin[1] ^= ppix[1];
-            pbin[2] ^= ppix[2];
-            pbin[3] ^= ppix[3];
-            pbin[4] ^= ppix[4];
-            pbin[5] ^= ppix[5];
-            pbin[6] ^= ppix[6];
-            pbin[7] ^= ppix[7];
-            pbin += 8;
-            ppix += 8;
+
+    if (cols % 8 == 0) {
+        for (l = 0; l < rows; l++) {
+            pbin = p->bins + l * p->angle.p - offset;
+            for (k = cols / 8; k > 0; k--) {
+                pbin[0] ^= ppix[0];
+                pbin[1] ^= ppix[1];
+                pbin[2] ^= ppix[2];
+                pbin[3] ^= ppix[3];
+                pbin[4] ^= ppix[4];
+                pbin[5] ^= ppix[5];
+                pbin[6] ^= ppix[6];
+                pbin[7] ^= ppix[7];
+                pbin += 8;
+                ppix += 8;
+            }
+        }
+    } else {
+        for (l = 0; l < rows; l++) {
+            pbin = p->bins + l * p->angle.p - offset;
+            for (k = cols - 1; k >= 0; k--) {
+                pbin[k] ^= ppix[k];
+            }
         }
     }
 }

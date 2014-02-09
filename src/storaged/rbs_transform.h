@@ -104,7 +104,7 @@ extern uint8_t rbs_prj_idx_table[];
  * @return: 0 on success -1 otherwise
  */
 int rbs_transform_forward_one_proj(rbs_projection_ctx_t *prj_ctx_p,
-        rbs_inverse_block_t * block_ctx_p, uint8_t layout,
+        rbs_inverse_block_t * block_ctx_p, uint32_t layout,
         uint32_t first_block_idx, uint32_t number_of_blocks,
         tid_t projection_id, char *data);
 
@@ -126,7 +126,7 @@ int rbs_transform_forward_one_proj(rbs_projection_ctx_t *prj_ctx_p,
  *
  * @return: 0 on success -1 otherwise
  */
-int rbs_transform_inverse(rbs_projection_ctx_t *prj_ctx_p, uint8_t layout,
+int rbs_transform_inverse(rbs_projection_ctx_t *prj_ctx_p, uint32_t layout,
         uint32_t first_block_idx, uint32_t number_of_blocks,
         rbs_inverse_block_t *block_ctx_p, char *data);
 

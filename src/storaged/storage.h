@@ -53,7 +53,7 @@ typedef struct storage {
  *  Header structure for one file bins
  */
 typedef struct rozofs_stor_bins_file_hdr {
-    uint8_t layout; ///< layout used for this file.
+    uint32_t layout; ///< layout used for this file.
     sid_t dist_set_current[ROZOFS_SAFE_MAX]; ///< currents sids of storage nodes target for this file.
     sid_t dist_set_next[ROZOFS_SAFE_MAX]; ///< next sids of storage nodes target for this. file (not used yet)
     uint8_t version; ///<  version of rozofs. (not used yet)
@@ -61,7 +61,7 @@ typedef struct rozofs_stor_bins_file_hdr {
 
 typedef struct bins_file_rebuild {
     fid_t fid;
-    uint8_t layout; ///< layout used for this file.
+    uint32_t layout; ///< layout used for this file.
     sid_t dist_set_current[ROZOFS_SAFE_MAX]; ///< currents sids of storage nodes target for this file.
     struct bins_file_rebuild *next;
 } bins_file_rebuild_t;
@@ -76,7 +76,7 @@ typedef struct bins_file_rebuild {
  *
  * @return: the directory path
  */
-char *storage_map_distribution(storage_t * st, uint8_t layout,
+char *storage_map_distribution(storage_t * st, uint32_t layout,
         sid_t dist_set[ROZOFS_SAFE_MAX], uint8_t spare, char *path);
 
 /** Add the fid bins file to a given path
@@ -120,7 +120,7 @@ void storage_release(storage_t * st);
  *
  * @return: 0 on success -1 otherwise (errno is set)
  */
-int storage_write(storage_t * st, uint8_t layout, sid_t * dist_set,
+int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
         uint8_t spare, fid_t fid, bid_t bid, uint32_t nb_proj, uint8_t version,
         uint64_t *file_size, const bin_t * bins);
 
@@ -139,7 +139,7 @@ int storage_write(storage_t * st, uint8_t layout, sid_t * dist_set,
  *
  * @return: 0 on success -1 otherwise (errno is set)
  */
-int storage_read(storage_t * st, uint8_t layout, sid_t * dist_set,
+int storage_read(storage_t * st, uint32_t layout, sid_t * dist_set,
         uint8_t spare, fid_t fid, bid_t bid, uint32_t nb_proj,
         bin_t * bins, size_t * len_read, uint64_t *file_size);
 
@@ -158,7 +158,7 @@ int storage_read(storage_t * st, uint8_t layout, sid_t * dist_set,
  *
  * @return: 0 on success -1 otherwise (errno is set)
  */
-int storage_truncate(storage_t * st, uint8_t layout, sid_t * dist_set,
+int storage_truncate(storage_t * st, uint32_t layout, sid_t * dist_set,
         uint8_t spare, fid_t fid, tid_t proj_id,bid_t bid,uint8_t version,
          uint16_t last_seg,uint64_t last_timestamp);
 
@@ -172,7 +172,7 @@ int storage_truncate(storage_t * st, uint8_t layout, sid_t * dist_set,
  *
  * @return: 0 on success -1 otherwise (errno is set)
  */
-int storage_rm_file(storage_t * st, uint8_t layout, sid_t * dist_set,
+int storage_rm_file(storage_t * st, uint32_t layout, sid_t * dist_set,
         fid_t fid);
 
 /** Stat a storage

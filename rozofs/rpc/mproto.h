@@ -34,7 +34,7 @@ typedef struct mp_status_ret_t mp_status_ret_t;
 struct mp_remove_arg_t {
 	uint16_t cid;
 	uint8_t sid;
-	uint8_t layout;
+	uint32_t layout;
 	uint32_t dist_set[ROZOFS_SAFE_MAX_NET];
 	mp_uuid_t fid;
 };
@@ -80,7 +80,7 @@ typedef struct mp_child_t *mp_children_t;
 
 struct mp_child_t {
 	mp_uuid_t fid;
-	uint8_t layout;
+	uint32_t layout;
 	uint8_t dist_set[ROZOFS_SAFE_MAX];
 	mp_children_t next;
 };
@@ -89,7 +89,7 @@ typedef struct mp_child_t mp_child_t;
 struct bins_files_list_t {
 	mp_children_t children;
 	uint8_t eof;
-	uint8_t layout;
+	uint32_t layout;
 	uint8_t spare;
 	uint8_t dist_set[ROZOFS_SAFE_MAX];
 	uint64_t cookie;
@@ -109,7 +109,7 @@ struct mp_list_bins_files_arg_t {
 	uint16_t cid;
 	uint8_t sid;
 	uint8_t rebuild_sid;
-	uint8_t layout;
+	uint32_t layout;
 	uint8_t dist_set[ROZOFS_SAFE_MAX];
 	uint8_t spare;
 	uint64_t cookie;

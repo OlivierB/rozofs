@@ -96,7 +96,7 @@ void rozofs_storcli_truncate_req_processing(rozofs_storcli_ctx_t *working_ctx_p)
   @retval 1 if there are enough received projection
   @retval 0 when there is enough projection
 */
-static inline int rozofs_storcli_all_prj_truncate_check(uint8_t layout,rozofs_storcli_projection_ctx_t *prj_cxt_p,dist_t *distribution)
+static inline int rozofs_storcli_all_prj_truncate_check(uint32_t layout,rozofs_storcli_projection_ctx_t *prj_cxt_p,dist_t *distribution)
 {
   /*
   ** Get the rozofs_forward value for the layout
@@ -368,7 +368,7 @@ void rozofs_storcli_truncate_req_processing(rozofs_storcli_ctx_t *working_ctx_p)
 {
 
   storcli_truncate_arg_t *storcli_truncate_rq_p = (storcli_truncate_arg_t*)&working_ctx_p->storcli_truncate_arg;
-  uint8_t layout = storcli_truncate_rq_p->layout;
+  uint32_t layout = storcli_truncate_rq_p->layout;
   uint8_t   rozofs_forward;
   uint8_t   rozofs_safe;
   uint8_t   projection_id;

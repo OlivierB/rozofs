@@ -84,7 +84,7 @@ int rbs_get_rb_entry_list(mclient_t * mclt, cid_t cid, sid_t sid,
         sid_t dist_set[ROZOFS_SAFE_MAX], uint64_t * cookie,
         bins_file_rebuild_t ** children, uint8_t * eof);
 
-int rbs_read_blocks(sclient_t **storages, uint8_t layout, cid_t cid,
+int rbs_read_blocks(sclient_t **storages, uint32_t layout, cid_t cid,
         sid_t dist_set[ROZOFS_SAFE_MAX], fid_t fid, bid_t first_block_idx,
         uint32_t nb_blocks_2_read, uint32_t * nb_blocks_read, int retry_nb,
         rbs_storcli_ctx_t * working_ctx_p);

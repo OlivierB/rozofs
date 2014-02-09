@@ -712,7 +712,7 @@ static void *load_trash_dir_thread(void *v) {
     return 0;
 }
 
-int export_initialize(export_t * e, volume_t *volume, uint8_t layout,
+int export_initialize(export_t * e, volume_t *volume, uint32_t layout,
         lv2_cache_t *lv2_cache, uint32_t eid, const char *root, const char *md5,
         uint64_t squota, uint64_t hquota) {
 

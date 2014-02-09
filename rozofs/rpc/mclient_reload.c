@@ -76,7 +76,7 @@ out:
     return status;
 }
 
-int mclient_remove(mclient_t * clt, uint8_t layout,
+int mclient_remove(mclient_t * clt, uint32_t layout,
         sid_t dist_set[ROZOFS_SAFE_MAX], fid_t fid) {
     int status = -1;
     mp_status_ret_t *ret = 0;

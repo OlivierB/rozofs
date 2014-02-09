@@ -24,40 +24,75 @@
 #include "rozofs.h"
 #include "rozofs_srv.h"
 
-rozofs_conf_layout_t rozofs_conf_layout_table[LAYOUT_MAX];
+rozofs_conf_layout_t rozofs_conf_layout_table;
+int32_t rozofs_layout;
+
+// void rozofs_layout_initialize() {
+//     int i;
+//     uint32_t layout;
+//     rozofs_conf_layout_t *p;
+
+//     p = rozofs_conf_layout_table;
+//     memset(p, 0, sizeof (rozofs_conf_layout_t) * LAYOUT_MAX);
+//     for (layout = 0; layout < LAYOUT_MAX; layout++, p++) {
+//         switch (layout) {
+//             case LAYOUT_2_3_4:
+//                 p->rozofs_safe = 4;
+//                 p->rozofs_forward = 3;
+//                 p->rozofs_inverse = 2;
+//                 break;
+//             case LAYOUT_3_5_7:
+//                 p->rozofs_safe = 7;
+//                 p->rozofs_forward = 5;
+//                 p->rozofs_inverse = 3;
+//                 break;
+//             case LAYOUT_4_6_8:
+//                 p->rozofs_safe = 8;
+//                 p->rozofs_forward = 6;
+//                 p->rozofs_inverse = 4;
+//                 break;
+//             case LAYOUT_8_12_16:
+//                 p->rozofs_safe = 16;
+//                 p->rozofs_forward = 12;
+//                 p->rozofs_inverse = 8;
+//                 break;
+//             default:
+//                 break;
+//         }
+
+//         DEBUG("initialize rozofs with inverse: %u, forward: %u, safe: %u",
+//                 p->rozofs_inverse, p->rozofs_forward, p->rozofs_safe);
+
+//         p->rozofs_angles = xmalloc(sizeof (angle_t) * p->rozofs_forward);
+//         p->rozofs_psizes = xmalloc(sizeof (uint16_t) * p->rozofs_forward);
+
+//         for (i = 0; i < p->rozofs_forward; i++) {
+//             p->rozofs_angles[i].p = i - p->rozofs_forward / 2;
+//             p->rozofs_angles[i].q = 1;
+//             p->rozofs_psizes[i] = abs(i - p->rozofs_forward / 2) * (p->rozofs_inverse - 1)
+//                     + (ROZOFS_BSIZE / sizeof (pxl_t) / p->rozofs_inverse - 1) + 1;
+//             if (p->rozofs_psizes[i] > p->rozofs_psizes_max) p->rozofs_psizes_max = p->rozofs_psizes[i];
+//         }
+//     }
+// }
 
 void rozofs_layout_initialize() {
-    int i;
-    uint8_t layout;
-    rozofs_conf_layout_t *p;
+    rozofs_layout = -1;
+}
 
-    p = rozofs_conf_layout_table;
-    memset(p, 0, sizeof (rozofs_conf_layout_t) * LAYOUT_MAX);
-    for (layout = 0; layout < LAYOUT_MAX; layout++, p++) {
-        switch (layout) {
-            case LAYOUT_2_3_4:
-                p->rozofs_safe = 4;
-                p->rozofs_forward = 3;
-                p->rozofs_inverse = 2;
-                break;
-            case LAYOUT_3_5_7:
-                p->rozofs_safe = 7;
-                p->rozofs_forward = 5;
-                p->rozofs_inverse = 3;
-                break;
-            case LAYOUT_4_6_8:
-                p->rozofs_safe = 8;
-                p->rozofs_forward = 6;
-                p->rozofs_inverse = 4;
-                break;
-            case LAYOUT_8_12_16:
-                p->rozofs_safe = 16;
-                p->rozofs_forward = 12;
-                p->rozofs_inverse = 8;
-                break;
-            default:
-                break;
-        }
+int set_layout(int32_t layout) {
+    
+    if (rozofs_layout == layout) {
+        return 1;
+    } else if (rozofs_layout == -1) {
+        rozofs_layout = layout;
+
+        rozofs_conf_layout_t *p;
+        p = &rozofs_conf_layout_table;
+
+        p->rozofs_safe = layout >> 16;
+        p->rozofs_forward = (layout >> 8) & 0xFF;
+        p->rozofs_inverse = (layout & 0xFF);
 
         DEBUG("initialize rozofs with inverse: %u, forward: %u, safe: %u",
                 p->rozofs_inverse, p->rozofs_forward, p->rozofs_safe);
@@ -72,20 +107,36 @@ void rozofs_layout_initialize() {
                     + (ROZOFS_BSIZE / sizeof (pxl_t) / p->rozofs_inverse - 1) + 1;
             if (p->rozofs_psizes[i] > p->rozofs_psizes_max) p->rozofs_psizes_max = p->rozofs_psizes[i];
         }
+        return 1;
+    } else {
+        return 0;
     }
+    
 }
 
+
+// void rozofs_layout_release() {
+//     uint32_t layout;
+//     rozofs_conf_layout_t *p;
+
+//     p = rozofs_conf_layout_table;
+
+//     for (layout = 0; layout < LAYOUT_MAX; layout++, p++) {
+
+//         if (p->rozofs_angles)
+//             free(p->rozofs_angles);
+//         if (p->rozofs_psizes)
+//             free(p->rozofs_psizes);
+//     }
+// }
+
 void rozofs_layout_release() {
-    uint8_t layout;
     rozofs_conf_layout_t *p;
 
     p = rozofs_conf_layout_table;
 
-    for (layout = 0; layout < LAYOUT_MAX; layout++, p++) {
-
-        if (p->rozofs_angles)
-            free(p->rozofs_angles);
-        if (p->rozofs_psizes)
-            free(p->rozofs_psizes);
-    }
+    if (p->rozofs_angles)
+        free(p->rozofs_angles);
+    if (p->rozofs_psizes)
+        free(p->rozofs_psizes);
 }

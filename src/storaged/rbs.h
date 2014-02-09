@@ -38,7 +38,7 @@
 
 typedef struct rb_entry {
     fid_t fid; ///< unique file identifier associated with the file
-    uint8_t layout; ///< layout used for this file.
+    uint32_t layout; ///< layout used for this file.
     sid_t dist_set_current[ROZOFS_SAFE_MAX]; ///< currents sids of storage nodes
     // target for this file.
     sclient_t **storages;

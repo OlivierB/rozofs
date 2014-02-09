@@ -129,7 +129,7 @@ static inline int rozofs_storcli_check_all_forward_transform_done(rozofs_storcli
   @retval 1 if there are enough received projection
   @retval 0 when there is enough projection
 */
-static inline int rozofs_storcli_all_prj_write_check(uint8_t layout,rozofs_storcli_projection_ctx_t *prj_cxt_p,dist_t *distribution)
+static inline int rozofs_storcli_all_prj_write_check(uint32_t layout,rozofs_storcli_projection_ctx_t *prj_cxt_p,dist_t *distribution)
 {
   /*
   ** Get the rozofs_forward value for the layout
@@ -497,7 +497,7 @@ void rozofs_storcli_write_req_processing_exec(rozofs_storcli_ctx_t *working_ctx_
    */
     rozofs_storcli_ingress_write_buf_t  *wr_proj_buf_p = working_ctx_p->wr_proj_buf;
     storcli_write_arg_no_data_t *storcli_write_rq_p = &working_ctx_p->storcli_write_arg;
-    uint8_t layout = storcli_write_rq_p->layout;
+    uint32_t layout = storcli_write_rq_p->layout;
     int i;
     int errcode;
     int ret;
@@ -859,7 +859,7 @@ void rozofs_storcli_write_req_processing(rozofs_storcli_ctx_t *working_ctx_p)
 {
 
   storcli_write_arg_no_data_t *storcli_write_rq_p = (storcli_write_arg_no_data_t*)&working_ctx_p->storcli_write_arg;
-  uint8_t layout = storcli_write_rq_p->layout;
+  uint32_t layout = storcli_write_rq_p->layout;
   uint8_t   rozofs_forward;
   uint8_t   rozofs_safe;
   uint8_t   projection_id;

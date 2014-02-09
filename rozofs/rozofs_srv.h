@@ -27,7 +27,7 @@
 #include <rozofs/rozofs_srv.h>
 #include "rozofs.h"
 
-#define LAYOUT_MAX 4
+#define LAYOUT_MAX 1
 
 /**
  * structure used to store the parameters relative to a given layout
@@ -42,6 +42,7 @@ typedef struct _rozofs_conf_layout_t {
 } rozofs_conf_layout_t;
 
 extern rozofs_conf_layout_t rozofs_conf_layout_table[];
+extern rozofs_layout;
 
 /**
  * Initialize the layout table
@@ -61,15 +62,23 @@ void rozofs_layout_initialize();
 void rozofs_layout_release();
 
 /**
+ * Set the layout value
+
+ @param layout
+ @retval 0 if error
+ */
+int set_layout(int32_t layout);
+
+/**
   Get the rozofs_inverse for a given layout
   
   @param layout : layout association with the file
   
   @retval rozofs_inverse associated with the layout
  */
-static inline uint8_t rozofs_get_rozofs_inverse(uint8_t layout) {
-    if (layout >= LAYOUT_MAX) return 0;
-    return rozofs_conf_layout_table[layout].rozofs_inverse;
+static inline uint8_t rozofs_get_rozofs_inverse(uint32_t layout) {
+    if (set_layout(layout) == 0) return 0;
+    return rozofs_conf_layout_table.rozofs_inverse;
 
 }
 
@@ -80,9 +89,9 @@ static inline uint8_t rozofs_get_rozofs_inverse(uint8_t layout) {
   
   @retval rozofs_inverse associated with the layout
  */
-static inline uint8_t rozofs_get_rozofs_forward(uint8_t layout) {
-    if (layout >= LAYOUT_MAX) return 0;
-    return rozofs_conf_layout_table[layout].rozofs_forward;
+static inline uint8_t rozofs_get_rozofs_forward(uint32_t layout) {
+    if (set_layout(layout) == 0) return 0;
+    return rozofs_conf_layout_table.rozofs_forward;
 
 }
 
@@ -93,9 +102,9 @@ static inline uint8_t rozofs_get_rozofs_forward(uint8_t layout) {
   
   @retval rozofs_inverse associated with the layout
  */
-static inline uint8_t rozofs_get_rozofs_safe(uint8_t layout) {
-    if (layout >= LAYOUT_MAX) return 0;
-    return rozofs_conf_layout_table[layout].rozofs_safe;
+static inline uint8_t rozofs_get_rozofs_safe(uint32_t layout) {
+    if (set_layout(layout) == 0) return 0;
+    return rozofs_conf_layout_table.rozofs_safe;
 
 }
 
@@ -107,9 +116,9 @@ static inline uint8_t rozofs_get_rozofs_safe(uint8_t layout) {
   
   @retval angle value
  */
-static inline int rozofs_get_angles_p(uint8_t layout, uint8_t projection_id) {
-    if (layout >= LAYOUT_MAX) return 0;
-    return rozofs_conf_layout_table[layout].rozofs_angles[projection_id].p;
+static inline int rozofs_get_angles_p(uint32_t layout, uint8_t projection_id) {
+    if (set_layout(layout) == 0) return 0;
+    return rozofs_conf_layout_table.rozofs_angles[projection_id].p;
 }
 
 /**
@@ -120,9 +129,9 @@ static inline int rozofs_get_angles_p(uint8_t layout, uint8_t projection_id) {
   
   @retval angle value
  */
-static inline int rozofs_get_angles_q(uint8_t layout, uint8_t projection_id) {
-    if (layout >= LAYOUT_MAX) return 0;
-    return rozofs_conf_layout_table[layout].rozofs_angles[projection_id].q;
+static inline int rozofs_get_angles_q(uint32_t layout, uint8_t projection_id) {
+    if (set_layout(layout) == 0) return 0;
+    return rozofs_conf_layout_table.rozofs_angles[projection_id].q;
 }
 
 /**
@@ -133,9 +142,9 @@ static inline int rozofs_get_angles_q(uint8_t layout, uint8_t projection_id) {
   
   @retval projection size
  */
-static inline int rozofs_get_psizes(uint8_t layout, uint8_t projection_id) {
-    if (layout >= LAYOUT_MAX) return 0;
-    return rozofs_conf_layout_table[layout].rozofs_psizes[projection_id];
+static inline int rozofs_get_psizes(uint32_t layout, uint8_t projection_id) {
+    if (set_layout(layout) == 0) return 0;
+    return rozofs_conf_layout_table.rozofs_psizes[projection_id];
 }
 
 /**
@@ -145,9 +154,9 @@ static inline int rozofs_get_psizes(uint8_t layout, uint8_t projection_id) {
   
   @retval projection size
  */
-static inline int rozofs_get_max_psize(uint8_t layout) {
-    if (layout >= LAYOUT_MAX) return 0;
-    return rozofs_conf_layout_table[layout].rozofs_psizes_max;
+static inline int rozofs_get_max_psize(uint32_t layout) {
+    if (set_layout(layout) == 0) return 0;
+    return rozofs_conf_layout_table.rozofs_psizes_max;
 }
 
 
