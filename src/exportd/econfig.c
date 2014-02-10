@@ -701,7 +701,7 @@ int econfig_read(econfig_t *config, const char *fname) {
         severe("can't lookup layout setting.");
         goto out;
     }
-    config->layout = (uint8_t) layout;
+    config->layout = (uint32_t) layout;
 
 #if 0 // not needed since exportgateway code is inactive
     if (!config_lookup_string(&cfg, EVIP, &host)) {
