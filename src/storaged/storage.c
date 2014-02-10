@@ -679,7 +679,7 @@ int storage_list_bins_files_to_rebuild(storage_t * st, sid_t sid,
                         case 460035:
                             if (sscanf(*p, "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"
                                     "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"
-                                    "%" SCNu8 "-%" SCNu8 "",
+                                    "%" SCNu8 "",
                                     &dist_set[0], &dist_set[1], &dist_set[2],
                                     &dist_set[3], &dist_set[4], &dist_set[5],
                                     &dist_set[6]) != 7) {
