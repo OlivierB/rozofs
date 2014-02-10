@@ -113,19 +113,9 @@ out:
     return status;
 }
 
-void init_storage_path(storage_t * st, uint32_t layout) {
+int init_storage_path(storage_t * st, uint32_t layout) {
     char path[FILENAME_MAX];
     int status = -1;
-
-    if (!realpath(root, st->root))
-        goto out;
-    // sanity checks
-    if (stat(st->root, &s) != 0)
-        goto out;
-    if (!S_ISDIR(s.st_mode)) {
-        errno = ENOTDIR;
-        goto out;
-    }
 
     // Build layout level directory
     sprintf(path, "%s/layout_%u", st->root, layout);
