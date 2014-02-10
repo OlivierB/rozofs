@@ -102,7 +102,7 @@ struct ep_export_t {
     uint32_t            eid;
     ep_md5_t            md5;
     ep_uuid_t           rfid;   /*root fid*/
-    uint8_t             rl;     /* rozofs layout */
+    uint32_t             rl;     /* rozofs layout */
     uint8_t             storage_nodes_nb;
     ep_storage_node_t   storage_nodes[STORAGE_NODES_MAX];
 };
@@ -131,7 +131,7 @@ struct ep_conf_export_t {
     uint32_t            eid;
     ep_md5_t            md5;
     ep_uuid_t           rfid;   /*root fid*/
-    uint8_t             rl;     /* rozofs layout */
+    uint32_t             rl;     /* rozofs layout */
     ep_cnf_storage_node_t   storage_nodes<>;
 };
 

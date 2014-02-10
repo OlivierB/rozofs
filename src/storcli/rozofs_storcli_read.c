@@ -824,7 +824,7 @@ end:
 int rozofs_storcli_read_projection_retry(rozofs_storcli_ctx_t *working_ctx_p,uint8_t projection_id,int same_storage_retry_acceptable)
 {
     uint8_t   rozofs_safe;
-    uint8_t   layout;
+    uint32_t   layout;
     uint8_t   rozofs_forward;
     uint8_t   rozofs_inverse;
     storcli_read_arg_t *storcli_read_rq_p;
@@ -1545,7 +1545,7 @@ wait_more_projection:
 void rozofs_storcli_read_timeout(rozofs_storcli_ctx_t *working_ctx_p) 
 {
     uint8_t   rozofs_safe;
-    uint8_t   layout;
+    uint32_t   layout;
     uint8_t   rozofs_inverse;
     storcli_read_arg_t *storcli_read_rq_p;
     uint32_t   projection_id;

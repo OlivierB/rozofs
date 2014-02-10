@@ -89,7 +89,7 @@
 #define ROZOFS_MPROTO_TIMEOUT_SEC 4
 
 typedef enum {
-    LAYOUT_2_3_4, LAYOUT_4_6_8, LAYOUT_8_12_16, LAYOUT_3_5_7
+    LAYOUT_2_3_4 = 262914, LAYOUT_4_6_8 = 525828, LAYOUT_8_12_16 = 1051656, LAYOUT_3_5_7 = 460035
 } rozofs_layout_t;
 
 typedef uint8_t tid_t; /**< projection id */

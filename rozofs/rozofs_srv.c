@@ -25,7 +25,7 @@
 #include "rozofs_srv.h"
 
 rozofs_conf_layout_t rozofs_conf_layout_table;
-int32_t rozofs_layout;
+uint32_t rozofs_layout;
 
 // void rozofs_layout_initialize() {
 //     int i;
@@ -80,13 +80,14 @@ void rozofs_layout_initialize() {
     rozofs_layout = -1;
 }
 
-int set_layout(int32_t layout) {
+int set_layout(uint32_t layout) {
     int i;
     
     if (rozofs_layout == layout) {
         return 1;
     } else if (rozofs_layout == -1) {
-        rozofs_layout = layout;
+        DEBUG("Le layout : %u", layout);
+	rozofs_layout = layout;
 
         rozofs_conf_layout_t *p;
         p = &rozofs_conf_layout_table;
@@ -112,7 +113,6 @@ int set_layout(int32_t layout) {
     } else {
         return 0;
     }
-    
 }
 
 

@@ -35,7 +35,7 @@ struct storcli_write_arg_t {
     uint16_t    cid;
     uint8_t     sid;
     uint8_t     empty_file;           
-    uint8_t     layout;
+    uint32_t     layout;
     uint8_t     dist_set[ROZOFS_SAFE_MAX];
     storcli_uuid_t   fid;        
     uint64_t    off;
@@ -46,7 +46,7 @@ struct storcli_write_arg_no_data_t {
     uint16_t    cid;
     uint8_t     sid;
     uint8_t     empty_file;                         
-    uint8_t     layout;
+    uint32_t     layout;
     uint8_t     dist_set[ROZOFS_SAFE_MAX];
     storcli_uuid_t   fid;        
     uint64_t    off;
@@ -58,7 +58,7 @@ struct storcli_write_arg_no_data_t {
 struct storcli_read_arg_t {
     uint16_t    cid;
     uint8_t     sid;
-    uint8_t     layout;
+    uint32_t     layout;
     uint8_t     spare;
     uint8_t     dist_set[ROZOFS_SAFE_MAX];
     storcli_uuid_t   fid; 
@@ -70,7 +70,7 @@ struct storcli_read_arg_t {
 struct storcli_truncate_arg_t {
     uint16_t    cid;
     uint8_t     sid;
-    uint8_t     layout;
+    uint32_t     layout;
     uint8_t     spare;
     uint8_t     dist_set[ROZOFS_SAFE_MAX];
     storcli_uuid_t   fid; 

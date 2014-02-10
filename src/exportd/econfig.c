@@ -702,6 +702,7 @@ int econfig_read(econfig_t *config, const char *fname) {
         goto out;
     }
     config->layout = (uint32_t) layout;
+    DEBUG("ECONFIG - 704 - layout: %u", layout);
 
 #if 0 // not needed since exportgateway code is inactive
     if (!config_lookup_string(&cfg, EVIP, &host)) {

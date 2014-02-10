@@ -271,7 +271,7 @@ xdr_ep_export_t (XDR *xdrs, ep_export_t *objp)
 		 return FALSE;
 	 if (!xdr_ep_uuid_t (xdrs, objp->rfid))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->rl))
+	 if (!xdr_uint32_t (xdrs, &objp->rl))
 		 return FALSE;
 	 if (!xdr_uint8_t (xdrs, &objp->storage_nodes_nb))
 		 return FALSE;
@@ -347,7 +347,7 @@ xdr_ep_conf_export_t (XDR *xdrs, ep_conf_export_t *objp)
 		 return FALSE;
 	 if (!xdr_ep_uuid_t (xdrs, objp->rfid))
 		 return FALSE;
-	 if (!xdr_uint8_t (xdrs, &objp->rl))
+	 if (!xdr_uint32_t (xdrs, &objp->rl))
 		 return FALSE;
 	 if (!xdr_array (xdrs, (char **)&objp->storage_nodes.storage_nodes_val, (u_int *) &objp->storage_nodes.storage_nodes_len, ~0,
 		sizeof (ep_cnf_storage_node_t), (xdrproc_t) xdr_ep_cnf_storage_node_t))

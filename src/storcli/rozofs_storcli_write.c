@@ -134,6 +134,8 @@ static inline int rozofs_storcli_all_prj_write_check(uint32_t layout,rozofs_stor
   /*
   ** Get the rozofs_forward value for the layout
   */
+  DEBUG("rozofs_storcli_all_prj_write_check - layout = %u", layout);
+
   uint8_t   rozofs_forward = rozofs_get_rozofs_forward(layout);
   int i;
   int received = 0;
@@ -750,6 +752,9 @@ void rozofs_storcli_write_req_init(uint32_t  socket_ctx_idx, void *recv_buf,rozo
    ** set now the working variable specific for handling the write
    ** We need one large buffer per projection that will be written on storage
    */
+
+   DEBUG("storcli_write_req_init - layout = %u", storcli_write_rq_p->layout);
+
    uint8_t forward_projection = rozofs_get_rozofs_forward(storcli_write_rq_p->layout);
    for (i = 0; i < forward_projection; i++)
    {
@@ -857,9 +862,9 @@ failure:
 */
 void rozofs_storcli_write_req_processing(rozofs_storcli_ctx_t *working_ctx_p)
 {
-
   storcli_write_arg_no_data_t *storcli_write_rq_p = (storcli_write_arg_no_data_t*)&working_ctx_p->storcli_write_arg;
   uint32_t layout = storcli_write_rq_p->layout;
+  DEBUG("rozofs_storcli_write_req_processing - layout = %u", storcli_write_rq_p->layout);
   uint8_t   rozofs_forward;
   uint8_t   rozofs_safe;
   uint8_t   projection_id;
@@ -1047,7 +1052,7 @@ void rozofs_storcli_write_projection_retry(rozofs_storcli_ctx_t *working_ctx_p,u
 {
     uint8_t   rozofs_safe;
     uint8_t   rozofs_forward;
-    uint8_t   layout;
+    uint32_t   layout;
     storcli_write_arg_no_data_t *storcli_write_rq_p = (storcli_write_arg_no_data_t*)&working_ctx_p->storcli_write_arg;
     int error;
     int storage_idx;
@@ -1534,7 +1539,7 @@ int rozofs_storcli_internal_read_rsp_cbk(void *buffer,uint32_t socket_ref,void *
    storcli_write_arg_no_data_t      *storcli_write_rq_p = NULL;
    
    storcli_write_rq_p = (storcli_write_arg_no_data_t*)&working_ctx_p->storcli_write_arg;
-   uint8_t  layout   = storcli_write_rq_p->layout;
+   uint32_t  layout   = storcli_write_rq_p->layout;
 
    XDR       xdrs;       
    uint8_t  *payload;

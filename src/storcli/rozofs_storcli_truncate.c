@@ -552,7 +552,7 @@ void rozofs_storcli_truncate_projection_retry(rozofs_storcli_ctx_t *working_ctx_
 {
     uint8_t   rozofs_safe;
     uint8_t   rozofs_forward;
-    uint8_t   layout;
+    uint32_t   layout;
     storcli_truncate_arg_t *storcli_truncate_rq_p = (storcli_truncate_arg_t*)&working_ctx_p->storcli_truncate_arg;
     int error;
     int storage_idx;

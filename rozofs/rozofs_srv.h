@@ -42,7 +42,7 @@ typedef struct _rozofs_conf_layout_t {
 } rozofs_conf_layout_t;
 
 extern rozofs_conf_layout_t rozofs_conf_layout_table;
-extern int rozofs_layout;
+extern uint32_t rozofs_layout;
 
 /**
  * Initialize the layout table
@@ -67,7 +67,7 @@ void rozofs_layout_release();
  @param layout
  @retval 0 if error
  */
-int set_layout(int32_t layout);
+int set_layout(uint32_t layout);
 
 /**
   Get the rozofs_inverse for a given layout
@@ -77,6 +77,7 @@ int set_layout(int32_t layout);
   @retval rozofs_inverse associated with the layout
  */
 static inline uint8_t rozofs_get_rozofs_inverse(uint32_t layout) {
+    //DEBUG("rozofs_get_rozofs_inverse - Le layout : %u", layout);
     if (set_layout(layout) == 0) return 0;
     return rozofs_conf_layout_table.rozofs_inverse;
 
@@ -90,6 +91,7 @@ static inline uint8_t rozofs_get_rozofs_inverse(uint32_t layout) {
   @retval rozofs_inverse associated with the layout
  */
 static inline uint8_t rozofs_get_rozofs_forward(uint32_t layout) {
+    //DEBUG("rozofs_get_rozofs_forward - Le layout : %u", layout);
     if (set_layout(layout) == 0) return 0;
     return rozofs_conf_layout_table.rozofs_forward;
 
@@ -103,6 +105,7 @@ static inline uint8_t rozofs_get_rozofs_forward(uint32_t layout) {
   @retval rozofs_inverse associated with the layout
  */
 static inline uint8_t rozofs_get_rozofs_safe(uint32_t layout) {
+    //DEBUG("rozofs_get_rozofs_safe - Le layout : %u", layout);
     if (set_layout(layout) == 0) return 0;
     return rozofs_conf_layout_table.rozofs_safe;
 
@@ -117,6 +120,7 @@ static inline uint8_t rozofs_get_rozofs_safe(uint32_t layout) {
   @retval angle value
  */
 static inline int rozofs_get_angles_p(uint32_t layout, uint8_t projection_id) {
+    //DEBUG("rozofs_get_angles_p - Le layout : %u", layout);
     if (set_layout(layout) == 0) return 0;
     return rozofs_conf_layout_table.rozofs_angles[projection_id].p;
 }
@@ -130,6 +134,7 @@ static inline int rozofs_get_angles_p(uint32_t layout, uint8_t projection_id) {
   @retval angle value
  */
 static inline int rozofs_get_angles_q(uint32_t layout, uint8_t projection_id) {
+    //DEBUG("rozofs_get_angles_q - Le layout : %u", layout);
     if (set_layout(layout) == 0) return 0;
     return rozofs_conf_layout_table.rozofs_angles[projection_id].q;
 }
@@ -143,6 +148,7 @@ static inline int rozofs_get_angles_q(uint32_t layout, uint8_t projection_id) {
   @retval projection size
  */
 static inline int rozofs_get_psizes(uint32_t layout, uint8_t projection_id) {
+    //DEBUG("rozofs_get_psizes - Le layout : %u", layout);
     if (set_layout(layout) == 0) return 0;
     return rozofs_conf_layout_table.rozofs_psizes[projection_id];
 }
@@ -155,6 +161,7 @@ static inline int rozofs_get_psizes(uint32_t layout, uint8_t projection_id) {
   @retval projection size
  */
 static inline int rozofs_get_max_psize(uint32_t layout) {
+    //DEBUG("rozofs_get_max_psize - Le layout : %u", layout);
     if (set_layout(layout) == 0) return 0;
     return rozofs_conf_layout_table.rozofs_psizes_max;
 }

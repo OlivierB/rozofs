@@ -223,7 +223,7 @@ int rozofs_storcli_check_projection2rebuild(rozofs_storcli_projection_ctx_t *prj
     @retval none
 */     
 void rozofs_storcli_transform_update_headers(rozofs_storcli_projection_ctx_t *prj_ctx_p, 
-                                             uint8_t  layout,
+                                             uint32_t  layout,
                                              uint32_t number_of_blocks_returned,
                                              uint32_t number_of_blocks_requested,
                                              uint64_t raw_file_size);
