@@ -668,7 +668,7 @@ int storage_list_bins_files_to_rebuild(storage_t * st, sid_t sid,
 
                     // Get the dist_set for this directory
                     switch (layout_it) {
-                        case LAYOUT_2_3_4:
+                        case 262914:
                             if (sscanf(*p, "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"
                                     "%" SCNu8 "",
                                     &dist_set[0], &dist_set[1],
@@ -676,7 +676,7 @@ int storage_list_bins_files_to_rebuild(storage_t * st, sid_t sid,
                                 continue;
                             }
                             break;
-                        case LAYOUT_3_5_7:
+                        case 460035:
                             if (sscanf(*p, "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"
                                     "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"
                                     "%" SCNu8 "-%" SCNu8 "",
@@ -686,7 +686,7 @@ int storage_list_bins_files_to_rebuild(storage_t * st, sid_t sid,
                                 continue;
                             }
                             break;
-                        case LAYOUT_4_6_8:
+                        case 525828:
                             if (sscanf(*p, "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"
                                     "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"
                                     "%" SCNu8 "-%" SCNu8 "",
@@ -696,7 +696,7 @@ int storage_list_bins_files_to_rebuild(storage_t * st, sid_t sid,
                                 continue;
                             }
                             break;
-                        case LAYOUT_8_12_16:
+                        case 1051656:
                             if (sscanf(*p, "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"
                                     "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"
                                     "%" SCNu8 "-%" SCNu8 "-%" SCNu8 "-"

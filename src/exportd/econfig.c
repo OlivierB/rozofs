@@ -1018,7 +1018,7 @@ int econfig_validate(econfig_t *config) {
     int status = -1;
     DEBUG_FUNCTION;
 
-    if (config->layout < LAYOUT_2_3_4 || config->layout > LAYOUT_3_5_7) {
+    if (config->layout < 65793) { // layout 1 1 1
         severe("unknown layout: %d.", config->layout);
         errno = EINVAL;
         goto out;
