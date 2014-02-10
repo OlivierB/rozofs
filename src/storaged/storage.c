@@ -44,6 +44,8 @@
 
 #include "storage.h"
 
+ uint8_t init_done;
+
 char *storage_map_distribution(storage_t * st, uint32_t layout,
         sid_t dist_set[ROZOFS_SAFE_MAX], uint8_t spare, char *path) {
     int i = 0;
@@ -88,9 +90,8 @@ char *storage_map_projection(fid_t fid, char *path) {
 
 int storage_initialize(storage_t *st, cid_t cid, sid_t sid, const char *root) {
     int status = -1;
-    uint32_t layout = 0;
-    char path[FILENAME_MAX];
     struct stat s;
+    init_done = 0;
 
     DEBUG_FUNCTION;
 
@@ -104,62 +105,79 @@ int storage_initialize(storage_t *st, cid_t cid, sid_t sid, const char *root) {
         goto out;
     }
 
-    // Build directories for each possible layout if necessary
-    for (layout = 0; layout < LAYOUT_MAX; layout++) {
-
-        // Build layout level directory
-        sprintf(path, "%s/layout_%u", st->root, layout);
-        if (access(path, F_OK) == -1) {
-            if (errno == ENOENT) {
-                // If the directory doesn't exist, create it
-                if (mkdir(path, ROZOFS_ST_DIR_MODE) != 0) {
-	            if (errno != EEXIST) { 		
-                    goto out;
-		    }
-	            // Well someone else has created the directory in the meantime
-		}    
-            } else {
-                goto out;
-            }
-        }
-
-        // Build spare level directories
-        sprintf(path, "%s/layout_%u/spare_0", st->root, layout);
-        if (access(path, F_OK) == -1) {
-            if (errno == ENOENT) {
-                // If the directory doesn't exist, create it
-                if (mkdir(path, S_IRUSR | S_IWUSR | S_IXUSR) != 0) {
-	            if (errno != EEXIST) { 		
-                    goto out;
-		    }
-	            // Well someone else has created the directory in the meantime
-		}    
-            } else {
-                goto out;
-            }
-        }
-        sprintf(path, "%s/layout_%u/spare_1", st->root, layout);
-        if (access(path, F_OK) == -1) {
-            if (errno == ENOENT) {
-                // If the directory doesn't exist, create it
-                if (mkdir(path, S_IRUSR | S_IWUSR | S_IXUSR) != 0) {
-	            if (errno != EEXIST) { 		
-                    goto out;
-		    }
-	            // Well someone else has created the directory in the meantime
-		}    
-            } else {
-                goto out;
-            }
-        }
-    }
-
     st->sid = sid;
     st->cid = cid;
 
     status = 0;
 out:
     return status;
+}
+
+void init_storage_path(storage_t * st, uint32_t layout) {
+    char path[FILENAME_MAX];
+    int status = -1;
+
+    if (!realpath(root, st->root))
+        goto out;
+    // sanity checks
+    if (stat(st->root, &s) != 0)
+        goto out;
+    if (!S_ISDIR(s.st_mode)) {
+        errno = ENOTDIR;
+        goto out;
+    }
+
+    // Build layout level directory
+    sprintf(path, "%s/layout_%u", st->root, layout);
+    if (access(path, F_OK) == -1) {
+        if (errno == ENOENT) {
+            // If the directory doesn't exist, create it
+            if (mkdir(path, ROZOFS_ST_DIR_MODE) != 0) {
+                if (errno != EEXIST) {       
+                    goto out;
+                }
+                // Well someone else has created the directory in the meantime
+            }    
+        } else {
+            goto out;
+        }
+    }
+
+    // Build spare level directories
+    sprintf(path, "%s/layout_%u/spare_0", st->root, layout);
+    if (access(path, F_OK) == -1) {
+        if (errno == ENOENT) {
+            // If the directory doesn't exist, create it
+            if (mkdir(path, S_IRUSR | S_IWUSR | S_IXUSR) != 0) {
+                if (errno != EEXIST) {       
+                    goto out;
+                }
+                // Well someone else has created the directory in the meantime
+            }    
+        } else {
+            goto out;
+        }
+    }
+    sprintf(path, "%s/layout_%u/spare_1", st->root, layout);
+    if (access(path, F_OK) == -1) {
+        if (errno == ENOENT) {
+            // If the directory doesn't exist, create it
+            if (mkdir(path, S_IRUSR | S_IWUSR | S_IXUSR) != 0) {
+                if (errno != EEXIST) {       
+                    goto out;
+                }
+                // Well someone else has created the directory in the meantime
+            }    
+        } else {
+            goto out;
+        }
+    }
+
+    status = 0;
+out:
+    init_done = 1;
+    return status;
+    
 }
 
 void storage_release(storage_t * st) {
@@ -185,6 +203,10 @@ int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
     uint16_t rozofs_max_psize = 0;
     uint8_t write_file_hdr = 0;
     struct stat sb;
+
+    if (init_done == 0) {
+        init_storage_path(st, layout);
+    }
     
     rozofs_max_psize = rozofs_get_max_psize(layout);
 
@@ -196,12 +218,12 @@ int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
         if (errno == ENOENT) {
             // If the directory doesn't exist, create it
             if (mkdir(path, ROZOFS_ST_DIR_MODE) != 0) {
-	      if (errno != EEXIST) { 
-	        // The directory is not created !!!
+          if (errno != EEXIST) { 
+            // The directory is not created !!!
                 severe("mkdir failed (%s) : %s", path, strerror(errno));
                 goto out;
-	      }	
-	      // Well someone else has created the directory in the meantime
+          } 
+          // Well someone else has created the directory in the meantime
             }
         } else {
             goto out;
@@ -378,12 +400,12 @@ int storage_truncate(storage_t * st, uint32_t layout, sid_t * dist_set,
         if (errno == ENOENT) {
             // If the directory doesn't exist, create it
             if (mkdir(path, ROZOFS_ST_DIR_MODE) != 0) {
-	      if (errno != EEXIST) { 
-	        // The directory is not created !!!
+          if (errno != EEXIST) { 
+            // The directory is not created !!!
                 severe("mkdir failed (%s) : %s", path, strerror(errno));
                 goto out;
-	      }	
-	      // Well someone else has created the directory in the meantime
+          } 
+          // Well someone else has created the directory in the meantime
             }
         } else {
             goto out;

@@ -78,6 +78,7 @@ uint32_t rozofs_layout;
 
 void rozofs_layout_initialize() {
     rozofs_layout = -1;
+    set_layout(262914);
 }
 
 int set_layout(uint32_t layout) {
