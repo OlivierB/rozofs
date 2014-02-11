@@ -59,7 +59,7 @@ char *storage_map_distribution(storage_t * st, uint32_t layout,
     // Check path integrity
     if (access(path, F_OK) == -1) {
         init_storage_path(st, layout);
-        DEBUG("init_storage_path - Storage initialize - %s", check_path);
+        DEBUG("init_storage_path - Storage initialize - %s", path);
     }
 
     uint8_t rozofs_safe = rozofs_get_rozofs_safe(layout);
