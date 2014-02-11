@@ -44,7 +44,7 @@
 
 #include "storage.h"
 
- uint8_t init_done;
+uint8_t init_done;
 
 char *storage_map_distribution(storage_t * st, uint32_t layout,
         sid_t dist_set[ROZOFS_SAFE_MAX], uint8_t spare, char *path) {
@@ -67,6 +67,17 @@ char *storage_map_distribution(storage_t * st, uint32_t layout,
             strcat(path, "-");
     }
     strcat(path, "/");
+    return path;
+}
+
+char *storage_check_path(storage_t * st, uint32_t layout, char *path) {
+    char build_path[FILENAME_MAX];
+
+    strncpy(path, st->root, FILENAME_MAX);
+    strcat(path, "/");
+    sprintf(build_path, "layout_%u/", layout);
+    strcat(path, build_path);
+
     return path;
 }
 
@@ -110,6 +121,7 @@ int storage_initialize(storage_t *st, cid_t cid, sid_t sid, const char *root) {
 
     status = 0;
 out:
+    DEBUG("storage_initialize - status = %i", status);
     return status;
 }
 
@@ -127,7 +139,7 @@ int init_storage_path(storage_t * st, uint32_t layout) {
                     goto out;
                 }
                 // Well someone else has created the directory in the meantime
-            }    
+            }
         } else {
             goto out;
         }
@@ -186,6 +198,7 @@ int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
         uint64_t *file_size, const bin_t * bins) {
     int status = -1;
     char path[FILENAME_MAX];
+    char check_path[FILENAME_MAX];
     int fd = -1;
     size_t nb_write = 0;
     size_t length_to_write = 0;
@@ -194,7 +207,9 @@ int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
     uint8_t write_file_hdr = 0;
     struct stat sb;
 
-    if (init_done == 0) {
+    // check path integrity
+    storage_check_path(st, layout, check_path);
+    if (access(check_path, F_OK) == -1) {
         init_storage_path(st, layout);
     }
     
@@ -208,12 +223,12 @@ int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
         if (errno == ENOENT) {
             // If the directory doesn't exist, create it
             if (mkdir(path, ROZOFS_ST_DIR_MODE) != 0) {
-          if (errno != EEXIST) { 
-            // The directory is not created !!!
-                severe("mkdir failed (%s) : %s", path, strerror(errno));
-                goto out;
-          } 
-          // Well someone else has created the directory in the meantime
+                if (errno != EEXIST) { 
+                    // The directory is not created !!!
+                    severe("mkdir failed (%s) : %s", path, strerror(errno));
+                    goto out;
+                } 
+                // Well someone else has created the directory in the meantime
             }
         } else {
             goto out;
