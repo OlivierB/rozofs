@@ -44,8 +44,6 @@
 
 #include "storage.h"
 
-uint8_t init_done;
-
 char *storage_map_distribution(storage_t * st, uint32_t layout,
         sid_t dist_set[ROZOFS_SAFE_MAX], uint8_t spare, char *path) {
     int i = 0;
@@ -102,7 +100,6 @@ char *storage_map_projection(fid_t fid, char *path) {
 int storage_initialize(storage_t *st, cid_t cid, sid_t sid, const char *root) {
     int status = -1;
     struct stat s;
-    init_done = 0;
 
     DEBUG_FUNCTION;
 
@@ -177,7 +174,6 @@ int init_storage_path(storage_t * st, uint32_t layout) {
 
     status = 0;
 out:
-    init_done = 1;
     return status;
     
 }
@@ -211,6 +207,9 @@ int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
     storage_check_path(st, layout, check_path);
     if (access(check_path, F_OK) == -1) {
         init_storage_path(st, layout);
+        DEBUG("init_storage_path - Storage initialize - %s", check_path);
+    } else {
+        DEBUG("init_storage_path - Storage OK - %s", check_path);
     }
     
     rozofs_max_psize = rozofs_get_max_psize(layout);
