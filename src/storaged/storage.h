@@ -99,9 +99,7 @@ char *storage_map_projection(fid_t fid, char *path);
  */
 int storage_initialize(storage_t *st, cid_t cid, sid_t sid, const char *root);
 
-
 int init_storage_path(storage_t * st, uint32_t layout);
-char *storage_check_path(storage_t * st, uint32_t layout, char *path);
 
 /** Release a storage
  *
