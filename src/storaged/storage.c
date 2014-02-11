@@ -55,6 +55,13 @@ char *storage_map_distribution(storage_t * st, uint32_t layout,
     strcat(path, "/");
     sprintf(build_path, "layout_%u/spare_%u/", layout, spare);
     strcat(path, build_path);
+
+    // Check path integrity
+    if (access(path, F_OK) == -1) {
+        init_storage_path(st, layout);
+        DEBUG("init_storage_path - Storage initialize - %s", check_path);
+    }
+
     uint8_t rozofs_safe = rozofs_get_rozofs_safe(layout);
 
     for (i = 0; i < rozofs_safe; i++) {
@@ -194,7 +201,7 @@ int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
         uint64_t *file_size, const bin_t * bins) {
     int status = -1;
     char path[FILENAME_MAX];
-    char check_path[FILENAME_MAX];
+    // char check_path[FILENAME_MAX];
     int fd = -1;
     size_t nb_write = 0;
     size_t length_to_write = 0;
@@ -203,14 +210,14 @@ int storage_write(storage_t * st, uint32_t layout, sid_t * dist_set,
     uint8_t write_file_hdr = 0;
     struct stat sb;
 
-    // check path integrity
-    storage_check_path(st, layout, check_path);
-    if (access(check_path, F_OK) == -1) {
-        init_storage_path(st, layout);
-        DEBUG("init_storage_path - Storage initialize - %s", check_path);
-    } else {
-        DEBUG("init_storage_path - Storage OK - %s", check_path);
-    }
+    // // check path integrity
+    // storage_check_path(st, layout, check_path);
+    // if (access(check_path, F_OK) == -1) {
+    //     init_storage_path(st, layout);
+    //     DEBUG("init_storage_path - Storage initialize - %s", check_path);
+    // } else {
+    //     DEBUG("init_storage_path - Storage OK - %s", check_path);
+    // }
     
     rozofs_max_psize = rozofs_get_max_psize(layout);
 
