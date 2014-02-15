@@ -1366,6 +1366,9 @@ int main(int argc, char *argv[]) {
     /* Bufsize must be a multiple of the block size */
     if ((conf.buf_size % (ROZOFS_BSIZE/1024)) != 0) {
       conf.buf_size = ((conf.buf_size / (ROZOFS_BSIZE/1024))+1) * (ROZOFS_BSIZE/1024);
+      if (conf.buf_size > 256) {
+        conf.buf_size = conf.buf_size - (ROZOFS_BSIZE/1024);
+      }
       fprintf(stderr,
         "write cache size - multiple error - BSIZE %d - new buffer %d\n",
         ROZOFS_BSIZE,
