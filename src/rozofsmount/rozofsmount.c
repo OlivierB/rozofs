@@ -1366,6 +1366,10 @@ int main(int argc, char *argv[]) {
     /* Bufsize must be a multiple of the block size */
     if ((conf.buf_size % (ROZOFS_BSIZE/1024)) != 0) {
       conf.buf_size = ((conf.buf_size / (ROZOFS_BSIZE/1024))+1) * (ROZOFS_BSIZE/1024);
+      fprintf(stderr,
+        "write cache size - multiple error - BSIZE %d - new buffer %d\n",
+        ROZOFS_BSIZE,
+        conf.buf_size);
     }
     
     if (conf.min_read_size == 0) {
@@ -1377,6 +1381,10 @@ int main(int argc, char *argv[]) {
     /* Bufsize must be a multiple of the block size */
     if ((conf.min_read_size % (ROZOFS_BSIZE/1024)) != 0) {
       conf.min_read_size = ((conf.min_read_size / (ROZOFS_BSIZE/1024))+1) * (ROZOFS_BSIZE/1024);
+      fprintf(stderr,
+        "min read size - multiple error - BSIZE %d - new buffer %d\n",
+        ROZOFS_BSIZE,
+        conf.min_read_size);
     }    
     
     if (conf.nbstorcli != 0) {
